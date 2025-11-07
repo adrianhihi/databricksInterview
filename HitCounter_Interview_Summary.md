@@ -17,6 +17,64 @@
 ---
 
 ## 🟢 基础版本：队列 + 秒聚合（已防溢出）
+```java
+
+
+import java.io.*;
+import java.util.*;
+
+
+class Solution {
+  public static class HitCounter {
+    private class Node {
+        int timestamp;
+        int count;
+        Node (int t, int c) {
+            timestamp = t;
+            count = c;
+        }
+    }
+
+    private Deque<Node> deque;
+    private int totalHits;
+
+    public HitCounter() {
+        deque = new LinkedList<>();
+        totalHits = 0;
+    }
+    
+    public void hit(int timestamp) {
+        if (!deque.isEmpty() && deque.getLast().timestamp == timestamp) {
+            deque.getLast().count ++;
+        } else {
+            deque.addLast(new Node(timestamp, 1));
+        }
+        totalHits ++;
+    }
+    
+    public int getHits(int timestamp) {
+        int cutoff = timestamp - 300;
+        while (!deque.isEmpty() && deque.getFirst().timestamp <= cutoff) {
+            totalHits -= deque.getFirst().count;
+            deque.removeFirst();
+        }
+        return totalHits;
+    }
+  }
+
+  public static void main(String[] args) {
+    HitCounter counter = new HitCounter();
+    counter.hit(1);
+    counter.hit(2);
+    counter.hit(3);
+    System.out.println(counter.getHits(4));
+    counter.hit(300);
+    System.out.println(counter.getHits(300));
+    System.out.println(counter.getHits(301));
+  }
+}
+
+```
 
 ### 💡 思路
 - 双端队列 `Deque<Node>` 仅保存“最近 300 秒”的节点；  
