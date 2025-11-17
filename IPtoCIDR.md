@@ -1,5 +1,10 @@
 
-https://app.coderpad.io/ZH936P9A
+1. Basic: https://app.coderpad.io/ZH936P9A
+2. Search Single IP: https://app.coderpad.io/6ENWJ3CH
+3. Ranged CIDR: https://app.coderpad.io/P42DEWXG
+
+
+
 
 # IP to CIDR：题意 + 快速规则 + 示例详解（为何 /28 不行、/29 和 /32 可以；/31 /30 为什么不合适）
 
